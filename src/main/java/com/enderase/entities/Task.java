@@ -31,6 +31,9 @@ public class Task {
 	@Column(name="dead_line", nullable=true)
 	private Date deadLine;
 	
+	@Column(name="owner_id", nullable=false)
+	private Long ownerId;
+	
 	@Column(name="date_created", nullable=false)
 	private Date dateCreated;
 	
@@ -71,6 +74,14 @@ public class Task {
 
 	public Date getDateCreated() {
 		return dateCreated;
+	}
+
+	public Long getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(Long ownerId) {
+		this.ownerId = ownerId;
 	}
 
 	public void setDateCreated(Date dateCreated) {

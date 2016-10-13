@@ -1,25 +1,12 @@
 package com.enderase.services;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-
 import com.enderase.entities.Task;
 
 /**
  * Service for handling task related stuffs
  * @author Kaleb Woldearegay <kaleb@gullele.com>
  */
-public class TaskService {
-	
-	/**
-	 * Pending spring for injection and DAO implementation
-	 */
-	private SessionFactory sessionFactory;
-	
-	public TaskService(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
+public class TaskService extends Service<Task>{
 	
 	/**
 	 * add new task
@@ -27,14 +14,9 @@ public class TaskService {
 	 * @param task
 	 * @return boolean
 	 */
-	public boolean addTask(Task task) {
-		
-        Session session = this.sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        session.save(task);
-        tx.commit();
-		
-        return true;
+	public Task save(Task task) {
+		task = super.save(task);
+		return task;
 	}
 	
 	/**
@@ -52,6 +34,7 @@ public class TaskService {
 	 * @return
 	 */
 	public Task update(Task task) {
+		task = super.update(task);
 		return task;
 	}
 }

@@ -12,12 +12,20 @@ import org.hibernate.cfg.Configuration;
  */
 public class HibernateUtil {
 	
-    public SessionFactory getSessionFactory() {
-    	//read the config from hibernate.cfg.xml
-        SessionFactory sessionFactory;
-        sessionFactory = new Configuration()
-                .configure()
-                .buildSessionFactory();
+	/**
+	 * Create a static class instance of the sessionFactory.
+	 */
+	private static SessionFactory sessionFactory = null;
+	
+    public static SessionFactory getSessionFactory() {
+    	
+    	if (sessionFactory == null) {
+        	//read the config from hibernate.cfg.xml
+            sessionFactory = new Configuration()
+                    .configure()
+                    .buildSessionFactory();    		
+    	}
+    	
         return sessionFactory;
     }
 }
