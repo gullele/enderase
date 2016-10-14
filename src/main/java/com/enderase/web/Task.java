@@ -8,6 +8,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import com.enderase.entities.Owner;
+import com.enderase.services.OwnerService;
 import com.enderase.services.TaskService;
 
 /**
@@ -24,13 +26,22 @@ public class Task {
 	@Path("add/{title}")
 	public Response addTask(@PathParam("title") String title) {
 		TaskService taskService = new TaskService();
+		OwnerService ownerService = new OwnerService();
+		
+		Owner owner = new Owner();
+		owner.setDateCreated(new Date());
+		owner.setEmail("kaleb@gullele.com");
+		owner.setFirstName("Kaleb");
+		owner.setLastName("Woldearegay");
+		owner.setPassword("123");
+		owner = ownerService.save(owner);
 		
 		com.enderase.entities.Task task = new com.enderase.entities.Task();
         task.setId(new Long(1));
         task.setTitle(title);
-        task.setDescription("This is with modification to the original one");
+        task.setDescription("Further modification is on the go");
         task.setDeadLine(new Date());
-        task.setOwnerId(1234l);
+        task.setOwner(owner);
         task.setDateCreated(new Date());
         task.setDateModified(new Date());
         

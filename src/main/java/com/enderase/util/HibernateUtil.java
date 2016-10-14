@@ -1,7 +1,11 @@
+
 package com.enderase.util;
 
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import org.hibernate.HibernateException;
 
 /**
  * Hibernate utility class to provide the sesion and related stuff.
@@ -13,19 +17,23 @@ import org.hibernate.cfg.Configuration;
 public class HibernateUtil {
 	
 	/**
-	 * Create a static class instance of the sessionFactory.
+	 * Create a static class instance of the entityManagerFactory.
 	 */
-	private static SessionFactory sessionFactory = null;
+	private static final EntityManagerFactory entityManagerFactory;
 	
-    public static SessionFactory getSessionFactory() {
-    	
-    	if (sessionFactory == null) {
-        	//read the config from hibernate.cfg.xml
-            sessionFactory = new Configuration()
-                    .configure()
-                    .buildSessionFactory();    		
-    	}
-    	
-        return sessionFactory;
+	static {
+		try {
+			entityManagerFactory = Persistence.createEntityManagerFactory("enderase-JPA");
+		} catch (Throwable ex) {
+			throw new ExceptionInInitializerError(ex);
+		}
+	}
+	
+	/**
+	 * Get entityManager from the entityManagerFactory
+	 * @return Session
+	 */
+    public static EntityManager getEntityManager() throws HibernateException{
+        return entityManagerFactory.createEntityManager();
     }
 }

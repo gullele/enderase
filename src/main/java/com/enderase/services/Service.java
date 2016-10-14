@@ -14,6 +14,10 @@ public abstract class Service<T> {
 	 * @return
 	 */
 	protected T save(T t) {
+		if (t == null) {
+			//log?
+			return null;
+		}
 		this.getDatabase().save(t);
 		return t;
 	}
@@ -24,8 +28,17 @@ public abstract class Service<T> {
 	 * @return
 	 */
 	protected T update(T t) {
+		if (t == null) {
+			//log ??
+			return null;
+		}
 		this.getDatabase().update(t);
 		return t;
+	}
+	
+	protected T getById(Long id) {
+		T t = null;
+		return this.getDatabase().getById(t, id);
 	}
 	
 	/**

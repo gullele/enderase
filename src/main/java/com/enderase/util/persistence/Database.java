@@ -1,7 +1,8 @@
 package com.enderase.util.persistence;
 
+import javax.persistence.EntityManager;
+
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.enderase.util.HibernateUtil;
@@ -19,10 +20,11 @@ public class Database<T> {
 	 * @return
 	 */
 	public T save(T t) {
-        Session session = this.getSessionFactory().openSession();
-        Transaction tx = session.beginTransaction();
-        session.save(t);
-        tx.commit();
+		EntityManager entityManager = this.getEntityManager();
+		
+        entityManager.getTransaction().begin();
+        entityManager.persist(t);
+        entityManager.getTransaction().commit();
 		
 		return t;
 	}
@@ -33,19 +35,27 @@ public class Database<T> {
 	 * @return
 	 */
 	public T update(T t) {
-        Session session = this.getSessionFactory().openSession();
-        Transaction tx = session.beginTransaction();
-        session.save(t);
-        tx.commit();
+		EntityManager entityManager = this.getEntityManager();
+		
+        entityManager.getTransaction().begin();
+        entityManager.persist(t);
+        entityManager.getTransaction().commit();
 		
 		return t;		
+	}
+	
+	public T getById(T t, Long id) {
+		EntityManager entityManager = this.getEntityManager();
+		@SuppressWarnings("unchecked")
+		T entity = (T)entityManager.find(t.getClass(), id);
+		return entity;
 	}
 	
 	/**
 	 * Get the session factory
 	 * @return SessionFactory
 	 */
-	private SessionFactory getSessionFactory() {
-		return HibernateUtil.getSessionFactory();
+	public EntityManager getEntityManager() {
+		return HibernateUtil.getEntityManager();
 	}
 }

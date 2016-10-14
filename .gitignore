@@ -3,4 +3,5 @@
 .settings
 target
 /build/
-src/main/resources/hibernate.cfg.xml
+WebContent/META-INF/MANIFEST.MF
+src/main/resources/META-INF/persistence.xml

@@ -1,5 +1,6 @@
 package com.enderase.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -7,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -16,7 +19,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="task")
-public class Task {
+public class Task implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -31,8 +36,9 @@ public class Task {
 	@Column(name="dead_line", nullable=true)
 	private Date deadLine;
 	
-	@Column(name="owner_id", nullable=false)
-	private Long ownerId;
+	@ManyToOne
+	@JoinColumn(name="owner_id")
+	private Owner owner;
 	
 	@Column(name="date_created", nullable=false)
 	private Date dateCreated;
@@ -76,12 +82,12 @@ public class Task {
 		return dateCreated;
 	}
 
-	public Long getOwnerId() {
-		return ownerId;
+	public Owner getOwnerId() {
+		return owner;
 	}
 
-	public void setOwnerId(Long ownerId) {
-		this.ownerId = ownerId;
+	public void setOwner(Owner owner) {
+		this.owner = owner;
 	}
 
 	public void setDateCreated(Date dateCreated) {
