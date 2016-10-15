@@ -4,6 +4,8 @@ import com.enderase.util.persistence.Database;
 
 /**
  * Generic abstract class that would act on inheriting class.
+ * @todo - this class shall be taken out and done with DAO 
+ * 
  * @author Kaleb Woldearegay <kaleb@gullele.com>
  */
 public abstract class Service<T> {
@@ -36,9 +38,8 @@ public abstract class Service<T> {
 		return t;
 	}
 	
-	protected T getById(Long id) {
-		T t = null;
-		return this.getDatabase().getById(t, id);
+	protected T getById(Class<T> c, Long id) {
+		return this.getDatabase().getById(c, id);
 	}
 	
 	/**

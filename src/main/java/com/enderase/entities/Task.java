@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Task entity - a mapper class for task table in the table.
@@ -19,9 +20,10 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="task")
+@XmlRootElement
 public class Task implements Serializable{
-	
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = -8885747627755708737L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -45,6 +47,8 @@ public class Task implements Serializable{
 	
 	@Column(name="date_modified", nullable=false)
 	private Date dateModified;
+	
+	public Task(){}
 
 	public Long getId() {
 		return id;

@@ -18,8 +18,11 @@ import javax.persistence.Table;
 @Table(name="account")
 public class Account implements Serializable{
 	
-	private static final long serialVersionUID = 1L;
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2478710608489745748L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
@@ -41,6 +44,8 @@ public class Account implements Serializable{
 	
 	@Column(name="date_created", nullable=true)
 	private Date dateCreated;
+	
+	public Account(){}//tobe used in JAX-RS
 
 	public void setId(Long id) {
 		this.id = id;

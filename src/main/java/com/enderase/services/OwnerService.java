@@ -37,7 +37,7 @@ public class OwnerService extends Service<Owner> {
 	 * @return Owner owner
 	 */
 	public Owner findById(Long id) {
-		Owner owner = super.getById(id);
+		Owner owner = super.getById(Owner.class, id);
 		return owner;
 	}
 	

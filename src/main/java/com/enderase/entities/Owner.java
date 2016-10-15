@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Entity class for owner of the task
@@ -17,9 +18,10 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="owner")
+@XmlRootElement
 public class Owner implements Serializable{
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -956303104059638013L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -40,6 +42,8 @@ public class Owner implements Serializable{
 	@Column(name="date_created")
 	private Date dateCreated;
 
+	public Owner(){}
+	
 	public Long getId() {
 		return id;
 	}

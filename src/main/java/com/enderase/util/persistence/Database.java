@@ -44,10 +44,9 @@ public class Database<T> {
 		return t;		
 	}
 	
-	public T getById(T t, Long id) {
+	public T getById(Class<T> c, Long id) {
 		EntityManager entityManager = this.getEntityManager();
-		@SuppressWarnings("unchecked")
-		T entity = (T)entityManager.find(t.getClass(), id);
+		T entity = (T)entityManager.find(c, id);
 		return entity;
 	}
 	

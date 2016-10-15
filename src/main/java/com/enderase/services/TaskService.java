@@ -1,5 +1,8 @@
 package com.enderase.services;
 
+import javax.persistence.EntityManager;
+
+import com.enderase.entities.Owner;
 import com.enderase.entities.Task;
 
 /**
@@ -15,7 +18,15 @@ public class TaskService extends Service<Task>{
 	 * @return boolean
 	 */
 	public Task save(Task task) {
-		task = super.save(task);
+		EntityManager entityManager = super.getDatabase().getEntityManager();
+		//to be moved to dao classes
+		entityManager.getTransaction().begin();
+		Owner owner = entityManager.find(Owner.class, task.getOwnerId().getId());
+		task.setOwner(owner);
+		entityManager.persist(task);
+		entityManager.flush();
+		entityManager.getTransaction().commit();
+		
 		return task;
 	}
 	
