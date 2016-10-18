@@ -24,6 +24,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Task implements Serializable{
 
 	private static final long serialVersionUID = -8885747627755708737L;
+	public static final int TASK_STATUS_OPEN = 1;
+	public static final int TASK_STATUS_INPROCESS = 2;
+	public static final int TASK_STATUS_PAUSED = 3;
+	public static final int TASK_STATUS_CLOSED = 4;
+	public static final int TASK_STATUS_REOPENED = 5;
+	public static final int TASK_STATUS_CREATED = 6;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -41,6 +47,9 @@ public class Task implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="owner_id")
 	private Owner owner;
+	
+	@JoinColumn(name="status", nullable=false)
+	private int status;
 	
 	@Column(name="date_created", nullable=false)
 	private Date dateCreated;
@@ -81,12 +90,20 @@ public class Task implements Serializable{
 	public void setDeadLine(Date deadLine) {
 		this.deadLine = deadLine;
 	}
+	
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	
+	public int getStatus() {
+		return this.status;
+	}
 
 	public Date getDateCreated() {
 		return dateCreated;
 	}
 
-	public Owner getOwnerId() {
+	public Owner getOwner() {
 		return owner;
 	}
 

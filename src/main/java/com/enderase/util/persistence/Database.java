@@ -2,9 +2,6 @@ package com.enderase.util.persistence;
 
 import javax.persistence.EntityManager;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
 import com.enderase.util.HibernateUtil;
 
 /**
@@ -39,6 +36,7 @@ public class Database<T> {
 		
         entityManager.getTransaction().begin();
         entityManager.persist(t);
+        entityManager.flush();
         entityManager.getTransaction().commit();
 		
 		return t;		

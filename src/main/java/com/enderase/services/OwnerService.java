@@ -1,7 +1,5 @@
 package com.enderase.services;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
 
 import com.enderase.entities.Owner;
@@ -31,35 +29,39 @@ public class OwnerService extends Service<Owner> {
 		return owner;
 	}
 	
+	public Owner delete(Owner owner) {
+		return null;
+	}
+	
 	/**
 	 * Get Owner by Id
 	 * @param id
 	 * @return Owner owner
 	 */
 	public Owner findById(Long id) {
-		Owner owner = super.getById(Owner.class, id);
-		return owner;
-	}
-	
-	/**
-	 * Get the owners if they are active or not 0 = inactive and 1 active
-	 * @param active
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
-	public List<Owner> getByActiveness(int active) {
-		List<Owner> owners = null;
-		
+		Owner owner = null;
 		try {
-			EntityManager em = this.getDatabase().getEntityManager();		
-			owners = (List<Owner>)em
-					.createQuery("SELECT t FROM TABLE t WHERE t.active = :active")
-					.setParameter("active", active)
-					.getResultList();
+			owner = super.getById(Owner.class, id);
 		} catch (Exception ex) {
 			throw ex;
 		}
 		
-		return owners;
+		return owner;
+	}
+	
+	public Owner findByUsername(String username) {
+		Owner owner = null;
+		
+		try {
+			EntityManager entityManager = getDatabase().getEntityManager();
+			owner = (Owner)entityManager
+				.createQuery("FROM com.enderase.entities.Owner AS owner WHERE owner.username = :username")
+				.setParameter("username", username)
+				.getSingleResult();
+		} catch (Exception ex) {
+			throw ex;
+		}
+		
+		return owner;
 	}
 }

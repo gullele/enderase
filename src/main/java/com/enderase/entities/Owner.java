@@ -36,6 +36,9 @@ public class Owner implements Serializable{
 	@Column(name="email", nullable=false)
 	private String email;
 	
+	@Column(name="username", nullable=false)
+	private String username;
+	
 	@Column(name="password", nullable=false)
 	private String password;
 	
@@ -74,6 +77,14 @@ public class Owner implements Serializable{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	public String getUsername() {
+		return this.username;
 	}
 
 	public String getPassword() {

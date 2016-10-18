@@ -1,4 +1,4 @@
-package com.enderase.web;
+package com.enderase.controllers;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
