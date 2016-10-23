@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import com.enderase.entities.Category;
 import com.enderase.entities.Owner;
 import com.enderase.entities.Task;
 
@@ -16,19 +17,36 @@ public class TaskService extends Service<Task>{
 	/**
 	 * add new task
 	 * @todo - is there a need to have bulk addition?
+	 * @todo - the approach is redundant and not efficient, as of now it will read owner and category from 
+	 * database. Both should be read from cache and merged with EntityManager than pulling those again
+	 * @todo - the error handling and propagating the exceptions is not done yet
 	 * @param task
 	 * @return boolean
 	 */
 	public Task save(Task task) {
-		EntityManager entityManager = super.getDatabase().getEntityManager();
-		//to be moved to dao classes
-		entityManager.getTransaction().begin();
-		Owner owner = entityManager.find(Owner.class, task.getOwner().getId());
-		task.setOwner(owner);
-		entityManager.persist(task);
-		entityManager.flush();
-		entityManager.getTransaction().commit();
-		
+		try {
+			EntityManager entityManager = super.getDatabase().getEntityManager();
+			//to be moved to dao classes
+			entityManager.getTransaction().begin();
+
+			Owner owner = (Owner)entityManager
+					.createQuery("FROM com.enderase.entities.Owner AS o WHERE o.username = :username")
+					.setParameter("username", task.getOwner().getUsername())
+					.getSingleResult();
+			Category category = (Category)entityManager
+					.createQuery("FROM com.enderase.entities.Category AS c WHERE c.nameShort = :nameShort")
+					.setParameter("nameShort", task.getCategory().getNameShort())
+					.getSingleResult();
+			task.setCategory(category);
+			task.setOwner(owner);
+			entityManager.persist(task);
+			entityManager.flush();
+			entityManager.getTransaction().commit();
+
+		} catch (Exception ex) {
+			throw ex;
+		}
+
 		return task;
 	}
 	

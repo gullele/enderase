@@ -48,7 +48,11 @@ public class Task implements Serializable{
 	@JoinColumn(name="owner_id")
 	private Owner owner;
 	
-	@JoinColumn(name="status", nullable=false)
+	@ManyToOne
+	@JoinColumn(name="category_id")
+	private Category category;
+	
+	@Column(name="status", nullable=false)
 	private int status;
 	
 	@Column(name="date_created", nullable=false)
@@ -109,6 +113,14 @@ public class Task implements Serializable{
 
 	public void setOwner(Owner owner) {
 		this.owner = owner;
+	}
+	
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+	
+	public Category getCategory() {
+		return this.category;
 	}
 
 	public void setDateCreated(Date dateCreated) {

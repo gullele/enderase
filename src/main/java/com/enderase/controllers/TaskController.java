@@ -13,6 +13,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.enderase.entities.Category;
 import com.enderase.entities.Owner;
 import com.enderase.entities.Task;
 import com.enderase.services.OwnerService;
@@ -33,14 +34,26 @@ public class TaskController {
 	private TaskService taskService;
 	private OwnerService ownerService;
 	
+	/**
+	 * Saves new task.
+	 * Example of the payload with post http method looks
+	 * {"title":"Pay tuition fee for family member", "description":"I need college tuition fee to be taken care of ", 
+	 * "category":{"id":"1"}, "deadLine":"10-29-2016 00:00:00"}
+	 * @param ownerUsername
+	 * @param task
+	 * @return
+	 */
 	@POST
 	@Path("{ownerUsername}")
 	public Task add(@PathParam("ownerUsername") String ownerUsername, Task task) {
+		/*
+		 * Category would be passed to the controller as part of the json payload 
+		 */
+		Category category = task.getCategory();
 		
-		Owner owner = getOwnerService().findByUsername(ownerUsername);
-		
-		if (owner instanceof Owner) {
-			
+		if (!ownerUsername.isEmpty() && category != null) {
+			Owner owner = new Owner();
+			owner.setUsername(ownerUsername);
 			task.setDeadLine(new Date());
 			task.setOwner(owner);
 			task.setDateCreated(new Date());
